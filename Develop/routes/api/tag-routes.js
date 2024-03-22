@@ -39,7 +39,7 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   // create a new tag
   try {
-    const tag = await tag.create(req.body);
+    const tag = await Tag.create(req.body);
     res.status(201).json(tag);
   } catch (err) {
     console.error(err);
@@ -53,6 +53,8 @@ router.put('/:id', async (req, res) => {
     const updatedTag = await Tag.update(req.body, {
       where: { id: req.params.id}
     });
+    console.log(updatedTag);
+
     if (!updatedTag[0]) {
       res.status(404).json({message: 'Can not find tag'});
       return;
@@ -67,7 +69,7 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   // delete on tag by its `id` value
   try {
-    const deletedTag = await Tag.destroy(req.body, {
+    const deletedTag = await Tag.destroy( {
       where: { id: req.params.id}
     });
     if (!deletedTag) {
